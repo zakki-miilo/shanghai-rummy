@@ -8,7 +8,7 @@ import { roundsData } from "./roundsData";
 
 const App: React.FC = () => {
   const [currentRound, setCurrentRound] = useState(0);
-  const [players, setPlayers] = useState([
+  const [players /*setPlayers*/] = useState([
     { name: "Sena", imageUrl: "Sena.jpg" },
     { name: "Sarah", imageUrl: "sarah.jpg" },
     { name: "Bing Bing", imageUrl: "ling.jpg" },
