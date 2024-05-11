@@ -42,18 +42,15 @@ const App: React.FC = () => {
     setRounds((prevRounds) => {
       return prevRounds.map((round, index) => {
         if (index === currentRound) {
-          // Clone the buys array for the current round to avoid direct mutation
           const newBuys = [...round.buys];
-          if (newBuys[playerIndex] < 3) {
-            newBuys[playerIndex] += 1; // Safely increment the buy count
+          if (newBuys[playerIndex] < roundsData[currentRound].buys) {
+            newBuys[playerIndex] += 1;
             console.log(
               `Updated buys for player ${playerIndex} in round ${currentRound}: ${newBuys[playerIndex]}`
             );
+            return { ...round, buys: newBuys };
           }
-          // Return the updated round object with the new buys array
-          return { ...round, buys: newBuys };
         }
-        // For rounds that aren't the current one, return them unchanged
         return round;
       });
     });
@@ -78,6 +75,13 @@ const App: React.FC = () => {
     );
   };
 
+  const lowestPoints = Math.min(
+    ...players.map((_, index) => calculateTotalPoints(index))
+  );
+  const winningPlayerCount = players.filter(
+    (_, index) => calculateTotalPoints(index) === lowestPoints
+  ).length;
+
   return (
     <div className="container my-4">
       <div className="position-absolute top-0 end-0 m-3">
@@ -94,19 +98,25 @@ const App: React.FC = () => {
         onPrevRound={handlePrevRound}
       />
       <div className="row mb-4">
-        {players.map((player, index) => (
-          <div key={index} className="col-md-3 mb-4">
-            <PlayerCard
-              name={player.name}
-              imageUrl={player.imageUrl}
-              points={rounds[currentRound].points[index]}
-              buys={rounds[currentRound].buys[index]}
-              onAddPoint={(points) => handleAddPoint(index, points)}
-              onAddBuy={() => handleAddBuy(index)}
-              totalPoints={calculateTotalPoints(index)}
-            />
-          </div>
-        ))}
+        {players.map((player, index) => {
+          const isWinning = calculateTotalPoints(index) === lowestPoints;
+          const isTie = isWinning && winningPlayerCount > 1;
+          return (
+            <div key={index} className="col-md-3 mb-4">
+              <PlayerCard
+                name={player.name}
+                imageUrl={player.imageUrl}
+                buys={rounds[currentRound].buys[index]}
+                onAddPoint={(points) => handleAddPoint(index, points)}
+                onAddBuy={() => handleAddBuy(index)}
+                totalPoints={calculateTotalPoints(index)}
+                currentRoundBuys={roundsData[currentRound].buys}
+                isWinning={isWinning}
+                isTie={isTie}
+              />
+            </div>
+          );
+        })}
       </div>
       <RoundTable
         rounds={rounds}

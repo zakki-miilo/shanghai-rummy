@@ -31,3 +31,107 @@ body {
   color: white;
   border-top: none;
 }
+
+.buy-card {
+  width: 30px;
+  height: 40px;
+  border-radius: 4px;
+  margin-right: 5px;
+  background-color: #e0e0e0;
+  transition: background-color 0.3s;
+}
+
+.buy-card-blue {
+  background-color: rgb(44, 158, 251);
+}
+
+.buy-card-green {
+  background-color: rgb(61, 219, 61);
+}
+
+.buy-card-yellow {
+  background-color: rgb(252, 252, 71);
+}
+
+.buy-card-red {
+  background-color: rgb(231, 71, 71);
+}
+
+.goal-container {
+  display: flex;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.goal-group {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.goal-count {
+  margin-right: 5px;
+}
+
+.goal-card {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 60px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.heart-symbol {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 12px;
+  color: red;
+}
+
+.dealt-cards-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.dealt-card-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 5px;
+}
+
+.dealt-card {
+  width: 20px;
+  height: 30px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.empty-card {
+  visibility: hidden;
+}
+
+.diamond-symbol {
+  color: red;
+}
+
+:root {
+  --bd-violet-bg: #712cf9;
+  --bs-white: #fff;
+}
+
+.custom-tooltip {
+  --bs-tooltip-bg: var(--bd-violet-bg);
+  --bs-tooltip-color: var(--bs-white);
+}
