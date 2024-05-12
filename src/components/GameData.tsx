@@ -18,8 +18,8 @@ const GameData: React.FC<GameDataProps> = ({ rounds, currentRound }) => {
   const { players } = useContext(PlayerContext);
 
   return (
-    <div>
-      <h2>Game Data</h2>
+    <div className="mb-3">
+      <h2 className="mb-4">Game Data</h2>
       <RoundTable
         rounds={rounds}
         players={players}
