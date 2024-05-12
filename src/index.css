@@ -98,6 +98,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 300px;
 }
 
 .dealt-card-row {
@@ -107,8 +108,9 @@ body {
 }
 
 .dealt-card {
-  width: 20px;
-  height: 30px;
+  position: relative;
+  width: 35px;
+  height: 50px;
   border: 1px solid #000;
   border-radius: 5px;
   margin-right: 5px;
@@ -118,13 +120,28 @@ body {
   font-size: 20px;
 }
 
+.card-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.diamond-symbol {
+  position: absolute;
+  top: -3px;
+  right: 2px;
+  font-size: 16px;
+  color: red;
+}
+
 .empty-card {
   visibility: hidden;
 }
 
-.diamond-symbol {
-  color: red;
-}
+
 
 :root {
   --bd-violet-bg: #712cf9;
@@ -134,4 +151,64 @@ body {
 .custom-tooltip {
   --bs-tooltip-bg: var(--bd-violet-bg);
   --bs-tooltip-color: var(--bs-white);
+}
+.heart-symbol {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 12px;
+}
+
+.suit-symbol {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: 12px;
+}
+
+.red {
+  color: red;
+}
+
+
+.side-navbar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background-color: #333131;
+  padding: 20px 0;
+  z-index: 1000;
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  height: 50px;
+ 
+  position: relative;
+}
+
+.nav-text {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #d15454;
+  color: #fff;
+  padding: 5px 10px;
+  margin-left: 5px;
+  border-radius: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.nav-icon:hover .nav-text {
+  opacity: 1;
+  visibility: visible;
 }

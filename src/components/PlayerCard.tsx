@@ -12,6 +12,8 @@ interface PlayerCardProps {
   currentRoundBuys: number;
   isWinning: boolean;
   isTie: boolean;
+  currentRound: number;
+  isWinner: boolean;
 }
 const PlayerCard: React.FC<PlayerCardProps> = ({
   name,
@@ -23,6 +25,8 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   currentRoundBuys,
   isWinning,
   isTie,
+  currentRound,
+  isWinner,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [inputPoints, setInputPoints] = useState(0);
@@ -44,11 +48,29 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
     setInputPoints((prevPoints) => prevPoints + points);
   };
   return (
-    <div className="card h-100 position-relative">
-      {isWinning && (
+    <div
+      className={`card h-100 position-relative ${
+        isWinner ? "border border-4 border-warning" : ""
+      }`}
+    >
+      {isWinner && (
+        <img
+          src="crown.png"
+          alt="Winner"
+          className="position-absolute"
+          style={{
+            top: "-32px",
+            left: "-31%",
+            transform: "translateX(50%) rotate(-30deg)",
+            width: "85px",
+          }}
+        />
+      )}
+
+      {isWinning && currentRound !== 0 && (
         <Badge
-          variant="success"
-          className="position-absolute bg-success rounded-pill"
+          bg={isTie ? "warning" : "info"}
+          className="position-absolute rounded-pill"
           style={{
             top: "-10px",
             right: "10px",
