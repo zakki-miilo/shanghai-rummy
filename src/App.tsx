@@ -1,5 +1,10 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PlayerCard from "./components/PlayerCard";
 import RoundInfo from "./components/RoundInfo";
@@ -7,29 +12,36 @@ import { Button } from "react-bootstrap";
 import { roundsData } from "./roundsData";
 import SideNavbar from "./components/SideNavbar";
 import GameData from "./components/GameData";
+import AddPlayerModal from "./components/AddPlayerModal";
+import { FaUserPlus } from "react-icons/fa";
+import { PlayerContext } from "./components/PlayerContext";
 
-const App: React.FC = () => {
-  const [currentRound, setCurrentRound] = useState(0);
-  const [players] = useState([
-    { name: "Sena", imageUrl: "Sena.jpg" },
-    { name: "Sarah", imageUrl: "sarah.jpg" },
-    { name: "Bing Bing", imageUrl: "ling.jpg" },
-    { name: "Zack", imageUrl: "Zack.jpg" },
-  ]);
+const AppContent: React.FC = () => {
+  const location = useLocation();
 
-  const [rounds, setRounds] = useState(
-    roundsData.map((round) => ({
-      ...round,
-      points: Array(players.length).fill(0),
-      buys: Array(players.length).fill(0),
-    }))
-  );
-
+  const {
+    players,
+    addPlayer,
+    setPlayers,
+    rounds,
+    setRounds,
+    currentRound,
+    setCurrentRound,
+  } = useContext(PlayerContext);
+  const [showAddPlayerModal, setShowAddPlayerModal] = useState(false);
   const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const roundFromURL = searchParams.get("round");
+    if (roundFromURL !== null) {
+      setCurrentRound(parseInt(roundFromURL, 10));
+    }
+  }, [location]);
 
   const calculateTotalPoints = (playerIndex: number) => {
     return rounds.reduce(
-      (total, round) => total + round.points[playerIndex],
+      (total, round) => total + (round.points[playerIndex] || 0),
       0
     );
   };
@@ -37,21 +49,25 @@ const App: React.FC = () => {
   const handleAddPoint = (playerIndex: number, points: number) => {
     setRounds((prevRounds) => {
       const updatedRounds = [...prevRounds];
-      updatedRounds[currentRound].points[playerIndex] += points;
+      const currentRoundPoints = updatedRounds[currentRound].points;
+      currentRoundPoints[playerIndex] =
+        (currentRoundPoints[playerIndex] || 0) + points;
       return updatedRounds;
     });
 
-    // Check if it's the last round and all players have added their points
-    if (
-      currentRound === 11 &&
-      rounds[currentRound].points.every((point) => point !== 0)
-    ) {
-      // Determine the winner
-      const winnerIndex = rounds[currentRound].points.indexOf(
-        Math.min(...rounds[currentRound].points)
-      );
-      setWinnerIndex(winnerIndex);
-    }
+    setRounds((prevRounds) => {
+      const currentRoundPoints = prevRounds[currentRound].points;
+      if (
+        currentRound === 11 &&
+        currentRoundPoints.every((point) => point !== undefined && point !== 0)
+      ) {
+        const winnerIndex = currentRoundPoints.indexOf(
+          Math.min(...currentRoundPoints)
+        );
+        setWinnerIndex(winnerIndex);
+      }
+      return prevRounds;
+    });
   };
 
   const handleAddBuy = (playerIndex: number) => {
@@ -61,9 +77,6 @@ const App: React.FC = () => {
           const newBuys = [...round.buys];
           if (newBuys[playerIndex] < roundsData[currentRound].buys) {
             newBuys[playerIndex] += 1;
-            console.log(
-              `Updated buys for player ${playerIndex} in round ${currentRound}: ${newBuys[playerIndex]}`
-            );
             return { ...round, buys: newBuys };
           }
         }
@@ -72,26 +85,18 @@ const App: React.FC = () => {
     });
   };
 
-  const handleNextRound = () => {
-    setCurrentRound((prevRound) => prevRound + 1);
-    setWinnerIndex(null); // Reset the winner when moving to the next round
-  };
-
-  const handlePrevRound = () => {
-    setCurrentRound((prevRound) => prevRound - 1);
-    setWinnerIndex(null); // Reset the winner when moving to the previous round
-  };
-
   const handleResetGame = () => {
     setCurrentRound(0);
-    setRounds(
-      rounds.map((round) => ({
-        ...round,
-        points: Array(players.length).fill(0),
-        buys: Array(players.length).fill(0),
-      }))
-    );
-    setWinnerIndex(null); // Reset the winner when resetting the game
+    setPlayers([]);
+    setRounds(roundsData.map((round) => ({ ...round, points: [], buys: [] })));
+    setWinnerIndex(null);
+  };
+
+  const handleShowAddPlayerModal = () => setShowAddPlayerModal(true);
+  const handleHideAddPlayerModal = () => setShowAddPlayerModal(false);
+
+  const handleAddPlayer = (name: string, imageUrl: string) => {
+    addPlayer({ name, imageUrl });
   };
 
   const lowestPoints = Math.min(
@@ -99,27 +104,45 @@ const App: React.FC = () => {
   );
 
   return (
-    <Router>
-      <div className="container my-4">
-        <SideNavbar />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <div className="position-absolute top-0 end-0 m-3">
-                  <Button variant="danger" onClick={handleResetGame}>
-                    Reset Game
+    <div className="container my-4">
+      <SideNavbar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <div className="d-flex justify-content-between align-items-center w-100">
+                <h1>Shanghai Rummy</h1>
+                <Button variant="danger" onClick={handleResetGame}>
+                  Reset Game
+                </Button>
+              </div>
+
+              <RoundInfo
+                roundGoal={rounds[currentRound].goal}
+                cardsDealt={rounds[currentRound].cards}
+              />
+              <div className="d-flex justify-content-between align-items-center mt-4">
+                {players.length > 0 && (
+                  <Button
+                    variant="primary"
+                    onClick={handleShowAddPlayerModal}
+                    className="mb-3"
+                  >
+                    <FaUserPlus className="me-2" />
+                    Add Player
+                  </Button>
+                )}
+              </div>
+              {players.length === 0 ? (
+                <div className="text-center mt-4">
+                  <h2 className="mb-4">Welcome to Shanghai Rummy!</h2>
+                  <p className="mb-4">Currently, there are no players.</p>
+                  <Button variant="primary" onClick={handleShowAddPlayerModal}>
+                    Add Players
                   </Button>
                 </div>
-                <h1 className="mb-4">Shanghai Rummy</h1>
-                <RoundInfo
-                  roundNumber={rounds[currentRound].number}
-                  roundGoal={rounds[currentRound].goal}
-                  cardsDealt={rounds[currentRound].cards}
-                  onNextRound={handleNextRound}
-                  onPrevRound={handlePrevRound}
-                />
+              ) : (
                 <div className="row mb-4">
                   {players.map((player, index) => {
                     const isWinning =
@@ -136,8 +159,9 @@ const App: React.FC = () => {
                       <div key={index} className="col-md-3 mb-4">
                         <PlayerCard
                           name={player.name}
+                          points={rounds[currentRound].points[index] || 0}
+                          buys={rounds[currentRound].buys[index] || 0}
                           imageUrl={player.imageUrl}
-                          buys={rounds[currentRound].buys[index]}
                           onAddPoint={(points) => handleAddPoint(index, points)}
                           onAddBuy={() => handleAddBuy(index)}
                           totalPoints={calculateTotalPoints(index)}
@@ -151,21 +175,28 @@ const App: React.FC = () => {
                     );
                   })}
                 </div>
-              </>
-            }
-          />
-          <Route
-            path="/game-data"
-            element={
-              <GameData
-                rounds={rounds}
-                players={players}
-                currentRound={currentRound}
-              />
-            }
-          />
-        </Routes>
-      </div>
+              )}
+            </>
+          }
+        />
+        <Route
+          path="/game-data"
+          element={<GameData rounds={rounds} currentRound={currentRound} />}
+        />
+      </Routes>
+      <AddPlayerModal
+        show={showAddPlayerModal}
+        onHide={handleHideAddPlayerModal}
+        onAddPlayer={handleAddPlayer}
+      />
+    </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 };

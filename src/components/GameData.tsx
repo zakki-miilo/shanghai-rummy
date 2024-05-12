@@ -1,6 +1,7 @@
 // GameData.tsx
-import React from "react";
+import React, { useContext } from "react";
 import RoundTable from "./RoundTable";
+import { PlayerContext } from "./PlayerContext";
 
 interface GameDataProps {
   rounds: {
@@ -10,17 +11,12 @@ interface GameDataProps {
     buys: number[];
     cards: number;
   }[];
-  players: {
-    name: string;
-  }[];
   currentRound: number;
 }
 
-const GameData: React.FC<GameDataProps> = ({
-  rounds,
-  players,
-  currentRound,
-}) => {
+const GameData: React.FC<GameDataProps> = ({ rounds, currentRound }) => {
+  const { players } = useContext(PlayerContext);
+
   return (
     <div>
       <h2>Game Data</h2>

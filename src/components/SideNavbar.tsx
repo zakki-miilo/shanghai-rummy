@@ -1,10 +1,13 @@
 // SideNavbar.tsx
-import React from "react";
+import React, { useContext } from "react";
 import { Nav } from "react-bootstrap";
 import { FaUser, FaHome, FaGamepad } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { PlayerContext } from "./PlayerContext";
 
 const SideNavbar: React.FC = () => {
+  const { currentRound } = useContext(PlayerContext);
+
   return (
     <Nav className="flex-column side-navbar">
       <Nav.Item>
@@ -14,10 +17,10 @@ const SideNavbar: React.FC = () => {
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/" className="nav-icon">
+        <Link to={`/?round=${currentRound}`} className="nav-link nav-icon">
           <FaHome />
           <span className="nav-text">Home</span>
-        </Nav.Link>
+        </Link>
       </Nav.Item>
       <Nav.Item>
         <Link to="/game-data" className="nav-link nav-icon">

@@ -1,21 +1,21 @@
-import React from "react";
-import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import React, { useContext } from "react";
+import { Tooltip, OverlayTrigger, Button } from "react-bootstrap";
+import { PlayerContext } from "./PlayerContext";
 
 interface RoundInfoProps {
-  roundNumber: number;
   roundGoal: string;
   cardsDealt: number;
-  onNextRound: () => void;
-  onPrevRound: () => void;
 }
 
-const RoundInfo: React.FC<RoundInfoProps> = ({
-  roundNumber,
-  roundGoal,
-  cardsDealt,
-  onNextRound,
-  onPrevRound,
-}) => {
+const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
+  const { currentRound, setCurrentRound } = useContext(PlayerContext);
+  const handleNextRound = () => {
+    setCurrentRound((prevRound) => prevRound + 1);
+  };
+
+  const handlePrevRound = () => {
+    setCurrentRound((prevRound) => prevRound - 1);
+  };
   const renderGoalCards = () => {
     const goalParts = roundGoal.split(", ");
     const faceCards = [
@@ -114,7 +114,25 @@ const RoundInfo: React.FC<RoundInfoProps> = ({
 
   return (
     <div className="d-flex flex-column align-items-center mb-4">
-      <h2 className="text-warning">Round {roundNumber}</h2>
+      <div className="d-flex align-items-center mb-3">
+        <Button
+          variant="secondary"
+          onClick={handlePrevRound}
+          disabled={currentRound === 0}
+          className="me-4 rounded-4"
+        >
+          Prev
+        </Button>
+        <h2 className="text-warning mb-0">Round {currentRound + 1}</h2>
+        <Button
+          variant="primary"
+          onClick={handleNextRound}
+          disabled={currentRound === 11}
+          className="ms-4 rounded-4"
+        >
+          {currentRound === 11 ? "Game Over" : "Next"}
+        </Button>
+      </div>
       <div className="container">
         <div className="row">
           <div className="col-md-8">
@@ -140,23 +158,6 @@ const RoundInfo: React.FC<RoundInfoProps> = ({
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="d-flex justify-content-center mt-4">
-        <button
-          className="btn btn-secondary m-2"
-          onClick={onPrevRound}
-          disabled={roundNumber === 1}
-        >
-          Previous Round
-        </button>
-        <button
-          className="btn btn-primary m-2"
-          onClick={onNextRound}
-          disabled={roundNumber === 12}
-        >
-          {roundNumber === 12 ? "Game Over" : "Next Round"}
-        </button>
       </div>
     </div>
   );
