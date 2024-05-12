@@ -123,9 +123,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
                 );
               })}
               {buys === currentRoundBuys && currentRoundBuys !== 0 && (
-                <Badge variant="success" className="ml-2">
-                  Max
-                </Badge>
+                <Badge className="ml-2">Max</Badge>
               )}
             </div>
           )}
