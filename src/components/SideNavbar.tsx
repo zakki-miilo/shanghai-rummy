@@ -13,7 +13,7 @@ const SideNavbar: React.FC = () => {
       <Nav.Item>
         <Nav.Link href="#account" className="nav-icon">
           <FaUser size={24} />
-          <span className="nav-text">Account</span>
+          <span className="nav-text">Account (NOT READY WIP!)</span>
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>

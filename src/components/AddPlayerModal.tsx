@@ -23,7 +23,20 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
     onHide();
   };
 
-  const images = ["pic1.png", "pic2.png", "pic3.png", "ling.jpg", "sarah.jpg"];
+  const images = [
+    "pic1.png",
+    "pic2.png",
+    "pic3.png",
+    "ling.jpg",
+    "sarah.jpg",
+    "cat1.jpeg",
+    "cat2.jpeg",
+    "cat3.jpeg",
+    "monkey1.jpeg",
+    "monkey2.jpeg",
+    "monkey3.jpeg",
+    "monkey4.jpeg",
+  ];
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -43,11 +56,11 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
           </Form.Group>
           <Form.Group controlId="playerImage">
             <Form.Label className="mt-3 fw-bold">Image</Form.Label>
-            <div className="d-flex flex-wrap">
+            <div className="d-flex flex-wrap justify-content-between">
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className={`m-2 thumbnail-container ${
+                  className={`thumbnail-container ${
                     imageUrl === image ? "border border-3 border-info" : ""
                   }`}
                   onClick={() => setImageUrl(image)}

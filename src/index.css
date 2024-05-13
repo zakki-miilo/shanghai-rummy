@@ -244,22 +244,17 @@ body {
 }
 
 .thumbnail-container {
-  width: 80px;
+  width: calc(25% - 1rem);
+    margin-bottom: 1rem;
   height: 80px;
   overflow: hidden;
   cursor: pointer;
   border-radius: 5px;
 }
 
+
 .thumbnail-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.prev-button-placeholder {
-  width: 60px;
-  height: 38px;
-  background-color: #6c757d;
-  border-radius: 20px;
 }
