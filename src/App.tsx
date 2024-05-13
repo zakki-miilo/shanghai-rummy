@@ -104,14 +104,14 @@ const AppContent: React.FC = () => {
   );
 
   return (
-    <div className="container my-4">
+    <div className="container">
       <SideNavbar />
       <Routes>
         <Route
           path="/"
           element={
             <>
-              <div className="d-flex justify-content-between align-items-center w-100w">
+              <div className="d-flex justify-content-between align-items-center w-100w mt-4">
                 <h1>Shanghai Rummy</h1>
                 <Button variant="danger" onClick={handleResetGame}>
                   Reset Game
