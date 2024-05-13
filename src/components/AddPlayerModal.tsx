@@ -36,6 +36,12 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
     "monkey2.jpeg",
     "monkey3.jpeg",
     "monkey4.jpeg",
+    "dino1.jpeg",
+    "dino2.jpeg",
+    "dino3.jpeg",
+    "dino4.jpeg",
+    "cooldino.jpeg",
+    "cooldino2.jpeg",
   ];
 
   return (
@@ -56,22 +62,24 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
           </Form.Group>
           <Form.Group controlId="playerImage">
             <Form.Label className="mt-3 fw-bold">Image</Form.Label>
-            <div className="d-flex flex-wrap justify-content-between">
-              {images.map((image, index) => (
-                <div
-                  key={index}
-                  className={`thumbnail-container ${
-                    imageUrl === image ? "border border-3 border-info" : ""
-                  }`}
-                  onClick={() => setImageUrl(image)}
-                >
-                  <Image
-                    src={image}
-                    alt={`Picture ${index + 1}`}
-                    className="thumbnail-image"
-                  />
-                </div>
-              ))}
+            <div className="thumbnail-grid-wrapper">
+              <div className="thumbnail-grid">
+                {images.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`thumbnail-container ${
+                      imageUrl === image ? "border border-3 border-info" : ""
+                    }`}
+                    onClick={() => setImageUrl(image)}
+                  >
+                    <Image
+                      src={image}
+                      alt={`Picture ${index + 1}`}
+                      className="thumbnail-image"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </Form.Group>
           <Button variant="primary" type="submit" className="mt-3">
