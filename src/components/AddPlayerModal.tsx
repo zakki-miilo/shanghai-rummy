@@ -24,6 +24,9 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
   };
 
   const images = [
+    "friends1.jpeg",
+    "friends2.jpeg",
+    "friends3.jpeg",
     "pic1.png",
     "pic2.png",
     "pic3.png",
