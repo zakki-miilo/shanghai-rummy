@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal, Form, Button, Image } from "react-bootstrap";
 
 interface AddPlayerModalProps {
   show: boolean;
@@ -23,6 +23,16 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
     onHide();
   };
 
+  const images = [
+    "pic1.png",
+    "pic2.png",
+    "pic3.png",
+    "ling.jpg",
+    "sarah.jpg",
+    "Sena.jpg",
+    "Zack.jpg",
+  ];
+
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
@@ -31,7 +41,7 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="playerName">
-            <Form.Label>Name</Form.Label>
+            <Form.Label className="fw-bold">Name</Form.Label>
             <Form.Control
               type="text"
               value={name}
@@ -40,18 +50,24 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
             />
           </Form.Group>
           <Form.Group controlId="playerImage">
-            <Form.Label>Image</Form.Label>
-            <Form.Control
-              as="select"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              required
-            >
-              <option value="">Select an image</option>
-              <option value="pic1.png">Picture 1</option>
-              <option value="pic2.png">Picture 2</option>
-              <option value="pic3.png">Picture 3</option>
-            </Form.Control>
+            <Form.Label className="mt-3 fw-bold">Image</Form.Label>
+            <div className="d-flex flex-wrap">
+              {images.map((image, index) => (
+                <div
+                  key={index}
+                  className={`m-2 thumbnail-container ${
+                    imageUrl === image ? "border border-3 border-info" : ""
+                  }`}
+                  onClick={() => setImageUrl(image)}
+                >
+                  <Image
+                    src={image}
+                    alt={`Picture ${index + 1}`}
+                    className="thumbnail-image"
+                  />
+                </div>
+              ))}
+            </div>
           </Form.Group>
           <Button variant="primary" type="submit" className="mt-3">
             Add Player
