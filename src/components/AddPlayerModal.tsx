@@ -23,15 +23,7 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
     onHide();
   };
 
-  const images = [
-    "pic1.png",
-    "pic2.png",
-    "pic3.png",
-    "ling.jpg",
-    "sarah.jpg",
-    "Sena.jpg",
-    "Zack.jpg",
-  ];
+  const images = ["pic1.png", "pic2.png", "pic3.png", "ling.jpg", "sarah.jpg"];
 
   return (
     <Modal show={show} onHide={onHide}>

@@ -12,19 +12,19 @@ const SideNavbar: React.FC = () => {
     <Nav className="flex-column side-navbar">
       <Nav.Item>
         <Nav.Link href="#account" className="nav-icon">
-          <FaUser />
+          <FaUser size={24} />
           <span className="nav-text">Account</span>
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Link to={`/?round=${currentRound}`} className="nav-link nav-icon">
-          <FaHome />
+          <FaHome size={24} />
           <span className="nav-text">Home</span>
         </Link>
       </Nav.Item>
       <Nav.Item>
         <Link to="/game-data" className="nav-link nav-icon">
-          <FaGamepad />
+          <FaGamepad size={24} />
           <span className="nav-text">Game Data</span>
         </Link>
       </Nav.Item>
