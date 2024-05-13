@@ -114,7 +114,7 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
 
   return (
     <div className="d-flex flex-column align-items-center mb-4 mt-2">
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center mb-3">
         <Button
           variant="secondary"
           onClick={handlePrevRound}
@@ -138,7 +138,9 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
           <div className="col-md-8">
             <div className="d-flex flex-column">
               <b className="rounded-2 bg-warning p-2">This Round's Goal</b>
-              <div className="goal-container mt-3">{renderGoalCards()}</div>
+              <div className="goal-container mt-3 mb-4">
+                {renderGoalCards()}
+              </div>
             </div>
           </div>
 
