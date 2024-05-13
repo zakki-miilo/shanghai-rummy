@@ -113,7 +113,11 @@ const AppContent: React.FC = () => {
             <>
               <div className="d-flex justify-content-between align-items-center w-100w mt-4">
                 <h1>Shanghai Rummy</h1>
-                <Button variant="danger" onClick={handleResetGame}>
+                <Button
+                  variant="danger"
+                  onClick={handleResetGame}
+                  className="rounded-pill"
+                >
                   Reset Game
                 </Button>
               </div>
