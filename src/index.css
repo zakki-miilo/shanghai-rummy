@@ -244,20 +244,22 @@ body {
 }
 
 .thumbnail-grid-wrapper {
-  overflow-x: auto;
+  overflow-x: scroll;
+  height: 340px;
   scrollbar-width: thin;
-  scrollbar-color: #888 #f1f1f1;
+  scrollbar-color: #423e3e #f1f1f1;
   margin-bottom: 1rem;
 }
 
 .thumbnail-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
   width: fit-content;
 }
 
 .thumbnail-container {
+  flex: 0 0 calc(33.33% - 0.67rem);
   height: 100px;
   overflow: hidden;
   cursor: pointer;
