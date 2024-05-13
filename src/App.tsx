@@ -111,7 +111,7 @@ const AppContent: React.FC = () => {
           path="/"
           element={
             <>
-              <div className="d-flex justify-content-between align-items-center w-100">
+              <div className="d-flex justify-content-between align-items-center w-100w">
                 <h1>Shanghai Rummy</h1>
                 <Button variant="danger" onClick={handleResetGame}>
                   Reset Game

@@ -69,8 +69,8 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
 
       {isWinning && currentRound !== 0 && (
         <Badge
-          bg={isTie ? "warning" : "info"}
-          className="position-absolute rounded-pill"
+          bg={isTie ? "warning" : "dark"}
+          className="position-absolute rounded-pill border border-3 border-warning"
           style={{
             top: "-10px",
             right: "10px",
