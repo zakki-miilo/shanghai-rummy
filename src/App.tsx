@@ -101,12 +101,12 @@ const AppContent: React.FC = () => {
     });
   };
 
-  const handleResetGame = () => {
+  /*const handleResetGame = () => {
     setCurrentRound(0);
     setPlayers([]);
     setRounds(roundsData.map((round) => ({ ...round, points: [], buys: [] })));
     setWinnerIndex(null);
-  };
+  };*/
 
   const handleShowAddPlayerModal = () => setShowAddPlayerModal(true);
   const handleHideAddPlayerModal = () => setShowAddPlayerModal(false);
