@@ -23,6 +23,9 @@ interface PlayerContextType {
   setRounds: React.Dispatch<React.SetStateAction<Round[]>>;
   currentRound: number;
   setCurrentRound: React.Dispatch<React.SetStateAction<number>>;
+  loggedInPlayer: Player | null;
+  setLoggedInPlayer: React.Dispatch<React.SetStateAction<Player | null>>;
+  resetGame: () => void;
 }
 
 export const PlayerContext = createContext<PlayerContextType>({
@@ -33,6 +36,9 @@ export const PlayerContext = createContext<PlayerContextType>({
   setRounds: () => {},
   currentRound: 0,
   setCurrentRound: () => {},
+  loggedInPlayer: null,
+  setLoggedInPlayer: () => {},
+  resetGame: () => {},
 });
 
 interface PlayerProviderProps {
@@ -44,6 +50,8 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }) => {
     const savedPlayers = localStorage.getItem("players");
     return savedPlayers ? JSON.parse(savedPlayers) : [];
   });
+
+  const [loggedInPlayer, setLoggedInPlayer] = useState<Player | null>(null);
 
   const [rounds, setRounds] = useState<Round[]>(() => {
     const savedRounds = localStorage.getItem("rounds");
@@ -64,7 +72,12 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }) => {
   }, [players, rounds]);
 
   const addPlayer = (player: Player) => {
-    setPlayers((prevPlayers) => [...prevPlayers, player]);
+    setPlayers((prevPlayers) => {
+      if (!prevPlayers.some((p) => p.name === player.name)) {
+        return [...prevPlayers, player];
+      }
+      return prevPlayers;
+    });
     setRounds((prevRounds) =>
       prevRounds.map((round) => ({
         ...round,
@@ -72,6 +85,18 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }) => {
         buys: [...round.buys, 0],
       }))
     );
+  };
+
+  const resetGame = () => {
+    setPlayers([]);
+    setRounds(
+      roundsData.map((round) => ({
+        ...round,
+        points: [],
+        buys: [],
+      }))
+    );
+    setCurrentRound(0);
   };
 
   return (
@@ -84,6 +109,9 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }) => {
         setRounds,
         currentRound,
         setCurrentRound,
+        loggedInPlayer,
+        setLoggedInPlayer,
+        resetGame,
       }}
     >
       {children}

@@ -15,6 +15,8 @@ import GameData from "./components/GameData";
 import AddPlayerModal from "./components/AddPlayerModal";
 import { FaUserPlus } from "react-icons/fa";
 import { PlayerContext } from "./components/PlayerContext";
+import ProfilePage from "./components/ProfilePage";
+import LoginPage from "./components/LoginPage";
 
 const AppContent: React.FC = () => {
   const location = useLocation();
@@ -27,7 +29,10 @@ const AppContent: React.FC = () => {
     setRounds,
     currentRound,
     setCurrentRound,
+    loggedInPlayer,
+    resetGame,
   } = useContext(PlayerContext);
+
   const [showAddPlayerModal, setShowAddPlayerModal] = useState(false);
   const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
 
@@ -45,6 +50,17 @@ const AppContent: React.FC = () => {
       0
     );
   };
+
+  useEffect(() => {
+    // Check if there is a logged-in player and if they are not already in the players array
+    if (
+      loggedInPlayer &&
+      !players.some((p) => p.name === loggedInPlayer.name)
+    ) {
+      // Automatically add the logged-in player as the first player
+      addPlayer(loggedInPlayer);
+    }
+  }, [loggedInPlayer, players, addPlayer]);
 
   const handleAddPoint = (playerIndex: number, points: number) => {
     setRounds((prevRounds) => {
@@ -115,7 +131,7 @@ const AppContent: React.FC = () => {
                 <h1>Shanghai Rummy</h1>
                 <Button
                   variant="danger"
-                  onClick={handleResetGame}
+                  onClick={resetGame}
                   className="rounded-pill"
                 >
                   Reset Game
@@ -183,10 +199,12 @@ const AppContent: React.FC = () => {
             </>
           }
         />
+        <Route path="/login" element={<LoginPage />} />
         <Route
           path="/game-data"
           element={<GameData rounds={rounds} currentRound={currentRound} />}
         />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
       <AddPlayerModal
         show={showAddPlayerModal}
@@ -204,5 +222,4 @@ const App: React.FC = () => {
     </Router>
   );
 };
-
 export default App;
