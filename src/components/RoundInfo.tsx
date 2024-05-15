@@ -16,7 +16,7 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
   const handlePrevRound = () => {
     setCurrentRound((prevRound) => prevRound - 1);
   };
-  const renderGoalCards = () => {
+  const renderGoalCards = (roundGoal: string) => {
     const goalParts = roundGoal.split(", ");
     const faceCards = [
       "A",
@@ -68,6 +68,9 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
         <div key={index} className="goal-group mb-2">
           <span className="goal-count p-2 me-2">{count} x</span>
           <div className="d-flex flex-wrap">{cards}</div>
+          <span className={`badge ${isRun ? "bg-warning" : "bg-info"} ms-2`}>
+            {isRun ? "Run" : "Set"}
+          </span>
         </div>
       );
     });
@@ -112,6 +115,31 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
     </Tooltip>
   );
 
+  const renderScorePoints = () => {
+    const scorePoints = [
+      { name: "2-9", points: 5 },
+      { name: "10-K", points: 10 },
+      { name: "A", points: 15 },
+      { name: "Joker", points: 20 },
+    ];
+
+    const scorePointCards = scorePoints.map(({ name, points }) => (
+      <div key={name} className="card bg-white text-danger mb-2 mt-2">
+        <div className="card-body position-relative">
+          <div className="d-flex justify-content-between align-items-center">
+            <h5 className="card-title mb-0">{name}</h5>
+            <div className="text-right">
+              <span className="diamond-symbol">♦</span>
+              <span className="ml-1">Points: {points}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    ));
+
+    return <div className="card-columns">{scorePointCards}</div>;
+  };
+
   return (
     <div className="d-flex flex-column align-items-center mb-4 mt-2">
       <div className="d-flex align-items-center mb-3 rounded-pill bg-dark p-3">
@@ -135,17 +163,19 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-md-8">
+          <div className="col-md-7">
             <div className="d-flex flex-column">
               <b className="rounded-2 bg-warning p-2">This Round's Goal</b>
               <div className="goal-container mt-3 mb-4">
-                <div className="d-flex flex-column">{renderGoalCards()}</div>
+                <div className="d-flex flex-column">
+                  {renderGoalCards(roundGoal)}
+                </div>
               </div>
             </div>
           </div>
 
           {/*Cards Dealt this turn*/}
-          <div className="col-md-4">
+          <div className="col-md-3">
             <div className="d-flex flex-column">
               <b className="text-info bg-dark p-2 rounded-2">
                 Cards dealt this round
@@ -158,6 +188,10 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
                 </div>
               </OverlayTrigger>
             </div>
+          </div>
+          <div className="col">
+            <b className="text-info p-2 mt-3 mb-5">Score Points</b>
+            <div>{renderScorePoints()}</div>
           </div>
         </div>
       </div>

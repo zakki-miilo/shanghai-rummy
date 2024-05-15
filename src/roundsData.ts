@@ -13,7 +13,7 @@ export const roundsData = [
   },
   {
     number: 3,
-    goal: "2 runs of 4",
+    goal: "2 run of 4",
     cards: 11,
     buys: 3,
   },

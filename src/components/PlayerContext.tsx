@@ -53,17 +53,13 @@ export const PlayerProvider: React.FC<PlayerProviderProps> = ({ children }) => {
 
   const [loggedInPlayer, setLoggedInPlayer] = useState<Player | null>(null);
 
-  const [rounds, setRounds] = useState<Round[]>(() => {
-    const savedRounds = localStorage.getItem("rounds");
-    return savedRounds
-      ? JSON.parse(savedRounds)
-      : roundsData.map((round) => ({
-          ...round,
-          points: Array(players.length).fill(0),
-          buys: Array(players.length).fill(0),
-        }));
-  });
-
+  const [rounds, setRounds] = useState<Round[]>(
+    roundsData.map((round) => ({
+      ...round,
+      points: Array(players.length).fill(0),
+      buys: Array(players.length).fill(0),
+    }))
+  );
   const [currentRound, setCurrentRound] = useState(0);
 
   useEffect(() => {
