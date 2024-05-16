@@ -19,19 +19,19 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
   const renderGoalCards = (roundGoal: string) => {
     const goalParts = roundGoal.split(", ");
     const faceCards = [
-      "A",
-      "K",
-      "Q",
-      "J",
-      "10",
-      "9",
-      "8",
-      "7",
-      "6",
-      "5",
-      "4",
-      "3",
       "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "J",
+      "Q",
+      "K",
+      "A",
     ];
     const suits = ["♣", "♠", "♦", "♥"];
 
@@ -66,8 +66,8 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
 
       return (
         <div key={index} className="goal-group mb-2">
-          <span className="goal-count p-2 me-2">{count} x</span>
-          <div className="d-flex flex-wrap">{cards}</div>
+          <span className="goal-count p-2 me-2 fs-4">{count} x</span>
+          <div className="d-flex flex-wrap fs-4">{cards}</div>
           <span className={`badge ${isRun ? "bg-warning" : "bg-info"} ms-2`}>
             {isRun ? "Run" : "Set"}
           </span>
