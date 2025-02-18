@@ -94,7 +94,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
           {currentRoundBuys === 0 ? (
             <p className="text-center text-muted mb-0">No buys this round.</p>
           ) : (
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center border border-2 border-warning w-100 p-2 rounded-3">
               {Array.from({ length: currentRoundBuys }, (_, index) => {
                 let colorClass = "";
                 if (index < buys) {
@@ -133,7 +133,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
             Add Point
           </button>
           <button
-            className="btn btn-secondary"
+            className="btn btn-outline-success"
             onClick={() => onAddBuy()}
             disabled={buys === currentRoundBuys}
           >

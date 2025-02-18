@@ -93,7 +93,7 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
 
         {/* Number of cards */}
         <div className="d-flex align-items-center">
-          <span className="fs-2 fw-bold text-primary">{cardsDealt}</span>
+          <span className="fs-1 fw-bold text-primary">{cardsDealt}</span>
           <span className="ms-2 text-muted">cards</span>
         </div>
       </div>
