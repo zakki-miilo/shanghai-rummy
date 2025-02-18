@@ -9,6 +9,7 @@ interface RoundInfoProps {
 
 const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
   const { currentRound, setCurrentRound } = useContext(PlayerContext);
+
   const handleNextRound = () => {
     setCurrentRound((prevRound) => prevRound + 1);
   };
@@ -16,6 +17,7 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
   const handlePrevRound = () => {
     setCurrentRound((prevRound) => prevRound - 1);
   };
+
   const renderGoalCards = (roundGoal: string) => {
     const goalParts = roundGoal.split(", ");
     const faceCards = [
@@ -76,31 +78,25 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
     });
   };
 
-  const renderDealtCards = () => {
-    const faceCards = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
-
-    const firstRowCards = Array.from({ length: 5 }, (_, i) => (
-      <div key={i} className="dealt-card">
-        <span className="card-number">{faceCards[i]}</span>
-        <span className="diamond-symbol">♦</span>
-      </div>
-    ));
-
-    const secondRowCards = Array.from({ length: cardsDealt - 5 }, (_, i) => (
-      <div key={i} className="dealt-card">
-        <span className="card-number">{faceCards[i + 5]}</span>
-        <span className="diamond-symbol">♦</span>
-      </div>
-    ));
-
+  const renderDeck = () => {
     return (
-      <>
-        <div className="dealt-card-row">{firstRowCards}</div>
-        <div className="dealt-card-row">
-          {secondRowCards}
-          {cardsDealt === 11 && <div className="dealt-card empty-card" />}
+      <div className="d-flex align-items-center">
+        {/* Card deck image */}
+        <div className="me-3">
+          <img
+            src="deck.png"
+            alt="Card Deck"
+            style={{ width: "100px", height: "auto" }}
+            className="img-fluid"
+          />
         </div>
-      </>
+
+        {/* Number of cards */}
+        <div className="d-flex align-items-center">
+          <span className="fs-2 fw-bold text-primary">{cardsDealt}</span>
+          <span className="ms-2 text-muted">cards</span>
+        </div>
+      </div>
     );
   };
 
@@ -174,18 +170,14 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
             </div>
           </div>
 
-          {/*Cards Dealt this turn*/}
+          {/* Cards Dealt this turn */}
           <div className="col-md-3">
             <div className="d-flex flex-column">
               <b className="text-info bg-dark p-2 rounded-2">
                 Cards dealt this round
               </b>
               <OverlayTrigger placement="bottom" overlay={renderTooltip}>
-                <div>
-                  <div className="dealt-cards-container mt-3">
-                    {renderDealtCards()}
-                  </div>
-                </div>
+                <div className="mt-3">{renderDeck()}</div>
               </OverlayTrigger>
             </div>
           </div>
