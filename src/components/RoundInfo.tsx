@@ -181,8 +181,8 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
               </OverlayTrigger>
             </div>
           </div>
-          <div className="col">
-            <b className="text-info p-2 mt-3 mb-5">Score Points</b>
+          <div className="col p-2 border border-3 border-danger rounded-2">
+            <b className="text-info p-2 mt-3 mb-5 ">Score Points</b>
             <div>{renderScorePoints()}</div>
           </div>
         </div>

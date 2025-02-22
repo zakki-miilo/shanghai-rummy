@@ -141,6 +141,7 @@ const AppContent: React.FC = () => {
                 roundGoal={rounds[currentRound].goal}
                 cardsDealt={rounds[currentRound].cards}
               />
+              <hr />
               <div className="d-flex justify-content-between align-items-center mt-4">
                 {players.length > 0 && (
                   <Button
