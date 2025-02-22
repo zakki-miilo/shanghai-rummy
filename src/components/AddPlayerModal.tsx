@@ -30,8 +30,6 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
     "pic1.png",
     "pic2.png",
     "pic3.png",
-    "ling.jpg",
-    "sarah.jpg",
     "cat1.jpeg",
     "cat2.jpeg",
     "cat3.jpeg",
@@ -85,7 +83,12 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
               </div>
             </div>
           </Form.Group>
-          <Button variant="primary" type="submit" className="mt-3">
+          <Button
+            variant="primary"
+            type="submit"
+            className="mt-3"
+            disabled={!name || !imageUrl}
+          >
             Add Player
           </Button>
         </Form>

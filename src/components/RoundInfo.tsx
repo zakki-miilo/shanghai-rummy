@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Tooltip, OverlayTrigger, Button } from "react-bootstrap";
 import { PlayerContext } from "./PlayerContext";
+import "../styles/RoundInfo.css";
 
 interface RoundInfoProps {
   roundGoal: string;
@@ -49,15 +50,19 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
           <div key={i} className="goal-card">
             {isRun ? (
               <>
-                {faceCards[i]}
-                <span className={`heart-symbol ${isRed ? "red" : ""}`}>
+                <span className="card-number">{faceCards[i]}</span>
+                <span
+                  className={`heart-symbol ${isRed ? "red" : ""} suit-large`}
+                >
                   {suit}
                 </span>
               </>
             ) : (
               <>
-                1
-                <span className={`suit-symbol ${isRed ? "red" : ""}`}>
+                <span className="card-number">1</span>
+                <span
+                  className={`suit-symbol ${isRed ? "red" : ""} suit-large`}
+                >
                   {suit}
                 </span>
               </>

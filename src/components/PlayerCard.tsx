@@ -1,6 +1,25 @@
 import React, { useState } from "react";
 import { Button, Modal, Form, ButtonGroup, Badge } from "react-bootstrap";
 
+const customButtonStyles = {
+  purple: {
+    backgroundColor: "#8B5CF6",
+    borderColor: "#7C3AED",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#7C3AED",
+    },
+  },
+  pink: {
+    backgroundColor: "#EC4899",
+    borderColor: "#DB2777",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#DB2777",
+    },
+  },
+};
+
 interface PlayerCardProps {
   name: string;
   points: number;
@@ -147,51 +166,39 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
           <Modal.Title>Add Points</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form.Group controlId="pointsInput">
+          <Form.Group controlId="pointsInput" className="mb-3">
             <Form.Label>Enter Points:</Form.Label>
             <Form.Control
               type="number"
               value={inputPoints}
               onChange={handleInputChange}
+              className="w-100"
             />
           </Form.Group>
-          <ButtonGroup className="mt-3">
-            <Button
-              variant="outline-primary"
-              onClick={() => handleQuickAddPoint(150)}
-            >
-              150
-            </Button>
-            <Button
-              variant="outline-primary"
-              onClick={() => handleQuickAddPoint(100)}
-            >
-              100
-            </Button>
-            <Button
-              variant="outline-primary"
-              onClick={() => handleQuickAddPoint(50)}
-            >
-              50
-            </Button>
-            <Button
-              variant="outline-primary"
-              onClick={() => handleQuickAddPoint(20)}
-            >
-              20
-            </Button>
-            <Button
-              variant="outline-primary"
-              onClick={() => handleQuickAddPoint(10)}
-            >
-              10
-            </Button>
-            <Button
-              variant="outline-primary"
-              onClick={() => handleQuickAddPoint(5)}
-            >
-              5
-            </Button>
+          <ButtonGroup className="mt-3 d-flex flex-wrap gap-2">
+            {[
+              { value: 150, variant: "danger" },
+              { value: 125, variant: "danger" },
+              { value: 100, variant: "warning" },
+              { value: 75, variant: "warning" },
+              { value: 50, variant: "info" },
+              { value: 30, variant: "info" },
+              { value: 25, variant: "success" },
+              { value: 20, variant: "success" },
+              { value: 15, style: customButtonStyles.purple },
+              { value: 10, style: customButtonStyles.purple },
+              { value: 5, style: customButtonStyles.pink },
+            ].map((button) => (
+              <Button
+                key={button.value}
+                variant={button.variant}
+                style={button.style}
+                onClick={() => handleQuickAddPoint(button.value)}
+                className="flex-grow-1 rounded-pill"
+              >
+                {button.value}
+              </Button>
+            ))}
           </ButtonGroup>
         </Modal.Body>
         <Modal.Footer>
