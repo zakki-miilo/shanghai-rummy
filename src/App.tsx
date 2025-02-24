@@ -17,12 +17,14 @@ import { FaUserPlus } from "react-icons/fa";
 import { PlayerContext } from "./components/PlayerContext";
 import ProfilePage from "./components/ProfilePage";
 import LoginPage from "./components/LoginPage";
+import ConfirmationModal from "./components/ConfirmationModal";
 
 const AppContent: React.FC = () => {
   const location = useLocation();
 
   const {
     players,
+    setPlayers, // Add this
     addPlayer,
     rounds,
     setRounds,
@@ -34,6 +36,7 @@ const AppContent: React.FC = () => {
 
   const [showAddPlayerModal, setShowAddPlayerModal] = useState(false);
   const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
+  const [showResetConfirmation, setShowResetConfirmation] = useState(false);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -41,7 +44,7 @@ const AppContent: React.FC = () => {
     if (roundFromURL !== null) {
       setCurrentRound(parseInt(roundFromURL, 10));
     }
-  }, [location]);
+  }, [location, setCurrentRound]);
 
   const calculateTotalPoints = (playerIndex: number) => {
     return rounds.reduce(
@@ -115,12 +118,14 @@ const AppContent: React.FC = () => {
     });
   };
 
-  /*const handleResetGame = () => {
-    setCurrentRound(0);
-    setPlayers([]);
-    setRounds(roundsData.map((round) => ({ ...round, points: [], buys: [] })));
-    setWinnerIndex(null);
-  };*/
+  const handleResetGame = () => {
+    setShowResetConfirmation(true);
+  };
+
+  const handleConfirmReset = () => {
+    resetGame(); // Use the resetGame function from context instead of manual reset
+    setShowResetConfirmation(false);
+  };
 
   const handleShowAddPlayerModal = () => setShowAddPlayerModal(true);
   const handleHideAddPlayerModal = () => setShowAddPlayerModal(false);
@@ -145,7 +150,7 @@ const AppContent: React.FC = () => {
                 <h1>Shanghai Rummy</h1>
                 <Button
                   variant="danger"
-                  onClick={resetGame}
+                  onClick={handleResetGame}
                   className="rounded-pill"
                 >
                   Reset Game
@@ -226,6 +231,13 @@ const AppContent: React.FC = () => {
         show={showAddPlayerModal}
         onHide={handleHideAddPlayerModal}
         onAddPlayer={handleAddPlayer}
+      />
+      <ConfirmationModal
+        show={showResetConfirmation}
+        onHide={() => setShowResetConfirmation(false)}
+        onConfirm={handleConfirmReset}
+        title="Reset Game"
+        message="Are you sure you want to reset the game? This action cannot be undone."
       />
     </div>
   );

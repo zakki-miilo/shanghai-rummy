@@ -73,7 +73,9 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
 
       return (
         <div key={index} className="goal-group mb-2">
-          <span className="goal-count p-2 me-2 fs-4">{count} x</span>
+          <span className="goal-count p-2 me-2 fs-2 text-primary fw-bold">
+            {count} x
+          </span>
           <div className="d-flex flex-wrap fs-4">{cards}</div>
           <span className={`badge ${isRun ? "bg-warning" : "bg-info"} ms-2`}>
             {isRun ? "Run" : "Set"}
