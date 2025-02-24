@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Modal, Form, Button, Image } from "react-bootstrap";
+import { FaUpload } from "react-icons/fa";
+import "../styles/AddPlayerModal.css";
 
 interface AddPlayerModalProps {
   show: boolean;
@@ -14,6 +16,21 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
 }) => {
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setUploadedImage(result);
+        setImageUrl(result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,8 +80,52 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
               required
             />
           </Form.Group>
+
           <Form.Group controlId="playerImage">
             <Form.Label className="mt-3 fw-bold">Image</Form.Label>
+
+            {/* Upload button */}
+            <div className="mb-3">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageUpload}
+                accept="image/*"
+                style={{ display: "none" }}
+              />
+              <Button
+                variant="outline-primary"
+                onClick={() => fileInputRef.current?.click()}
+                className="w-100"
+              >
+                <FaUpload className="me-2" />
+                Upload Your Own Image
+              </Button>
+            </div>
+
+            {/* Preview of uploaded image */}
+            {uploadedImage && (
+              <div className="mb-3">
+                <p className="fw-bold">Uploaded Image:</p>
+                <div
+                  className={`thumbnail-container ${
+                    imageUrl === uploadedImage
+                      ? "border border-3 border-info"
+                      : ""
+                  }`}
+                  onClick={() => setImageUrl(uploadedImage)}
+                  style={{ maxWidth: "150px" }}
+                >
+                  <Image
+                    src={uploadedImage}
+                    alt="Uploaded"
+                    className="thumbnail-image"
+                  />
+                </div>
+              </div>
+            )}
+
+            <p className="fw-bold mb-2">Or Choose from Gallery:</p>
             <div className="thumbnail-grid-wrapper">
               <div className="thumbnail-grid">
                 {images.map((image, index) => (
@@ -85,6 +146,7 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
               </div>
             </div>
           </Form.Group>
+
           <Button
             variant="primary"
             type="submit"
