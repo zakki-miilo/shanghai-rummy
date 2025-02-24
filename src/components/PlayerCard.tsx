@@ -90,16 +90,19 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
 
       {isWinning && currentRound !== 0 && (
         <Badge
-          bg={isTie ? "warning" : "dark"}
-          className="position-absolute rounded-pill border border-3 border-warning"
+          bg={isTie ? "warning" : "success"}
+          className="position-absolute rounded-pill border border-3 border-black"
           style={{
             top: "-10px",
             right: "10px",
             transform: "translateX(30%)",
-            fontSize: "15px",
+            fontSize: "20px",
+            boxShadow: "0 4px 8px rgba(10, 20, 40, 1.2)",
+            backgroundColor: isTie ? "#FFC107" : "#2DE172", // Custom colors
+            color: "white",
           }}
         >
-          {isTie ? "Draw" : "Winning"}
+          {isTie ? "DRAW" : "Winning"}
         </Badge>
       )}
       <img src={imageUrl} alt={name} className="card-img-top" />
