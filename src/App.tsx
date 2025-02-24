@@ -24,7 +24,6 @@ const AppContent: React.FC = () => {
 
   const {
     players,
-    setPlayers, // Add this
     addPlayer,
     rounds,
     setRounds,
