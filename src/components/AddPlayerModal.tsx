@@ -46,7 +46,7 @@ const AddPlayerModal: React.FC<AddPlayerModalProps> = ({
   ];
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show={show} onHide={onHide} size="lg">
       <Modal.Header closeButton>
         <Modal.Title>Add Player</Modal.Title>
       </Modal.Header>

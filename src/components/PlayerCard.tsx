@@ -33,6 +33,7 @@ interface PlayerCardProps {
   isTie: boolean;
   currentRound: number;
   isWinner: boolean;
+  onUndoBuy: () => void;
 }
 const PlayerCard: React.FC<PlayerCardProps> = ({
   name,
@@ -46,6 +47,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   isTie,
   currentRound,
   isWinner,
+  onUndoBuy,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [inputPoints, setInputPoints] = useState(0);
@@ -147,17 +149,24 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
             </div>
           )}
         </div>
-        <div className="mt-auto d-flex justify-content-between">
+        <div className="mt-auto d-flex justify-content-between gap-2">
           <button className="btn btn-primary" onClick={handleShowModal}>
             Add Point
           </button>
-          <button
-            className="btn btn-outline-success"
-            onClick={() => onAddBuy()}
-            disabled={buys === currentRoundBuys}
-          >
-            Buy
-          </button>
+          <div className="d-flex gap-2">
+            {buys > 0 && (
+              <button className="btn btn-outline-danger" onClick={onUndoBuy}>
+                Undo Buy
+              </button>
+            )}
+            <button
+              className="btn btn-outline-success"
+              onClick={() => onAddBuy()}
+              disabled={buys === currentRoundBuys}
+            >
+              Buy
+            </button>
+          </div>
         </div>
       </div>
 

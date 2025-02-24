@@ -100,6 +100,21 @@ const AppContent: React.FC = () => {
     });
   };
 
+  const handleUndoBuy = (playerIndex: number) => {
+    setRounds((prevRounds) => {
+      return prevRounds.map((round, index) => {
+        if (index === currentRound) {
+          const newBuys = [...round.buys];
+          if (newBuys[playerIndex] > 0) {
+            newBuys[playerIndex] -= 1;
+            return { ...round, buys: newBuys };
+          }
+        }
+        return round;
+      });
+    });
+  };
+
   /*const handleResetGame = () => {
     setCurrentRound(0);
     setPlayers([]);
@@ -184,6 +199,7 @@ const AppContent: React.FC = () => {
                           imageUrl={player.imageUrl}
                           onAddPoint={(points) => handleAddPoint(index, points)}
                           onAddBuy={() => handleAddBuy(index)}
+                          onUndoBuy={() => handleUndoBuy(index)}
                           totalPoints={calculateTotalPoints(index)}
                           currentRoundBuys={roundsData[currentRound].buys}
                           isWinning={isWinning}
