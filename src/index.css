@@ -375,3 +375,12 @@ body {
   box-shadow: 0 0 0 5px #dc3545, 0 0 15px rgba(220, 53, 69, 0.4);
   animation: pulse-red 2s infinite;
 }
+
+.card.winner-card,
+div.card.winner-card,
+.winner-card.card {
+  border: 3px solid #ffc107 !important;
+  box-shadow: 0 0 15px rgba(255, 193, 7, 0.7) !important;
+  animation: pulse-gold 2s infinite;
+  z-index: 1;
+}

@@ -127,7 +127,7 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
     ];
 
     const scorePointCards = scorePoints.map(({ name, points }) => (
-      <div key={name} className="card bg-white text-danger mb-2 mt-2">
+      <div key={name} className="card score-card mb-2">
         <div className="card-body position-relative">
           <div className="d-flex justify-content-between align-items-center">
             <h5 className="card-title mb-0">{name}</h5>
@@ -140,7 +140,7 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
       </div>
     ));
 
-    return <div className="card-columns">{scorePointCards}</div>;
+    return <div className="score-points-container">{scorePointCards}</div>;
   };
 
   return (
@@ -178,7 +178,7 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
           </div>
 
           {/* Cards Dealt this turn */}
-          <div className="col-md-3">
+          <div className="col-md-2">
             <div className="d-flex flex-column">
               <b className="text-info bg-dark p-2 rounded-2">
                 Cards dealt this round
@@ -188,9 +188,11 @@ const RoundInfo: React.FC<RoundInfoProps> = ({ roundGoal, cardsDealt }) => {
               </OverlayTrigger>
             </div>
           </div>
-          <div className="col p-2 border border-3 border-danger rounded-2">
-            <b className="text-info p-2 mt-3 mb-5 ">Score Points</b>
-            <div>{renderScorePoints()}</div>
+          <div className="col-md-3">
+            <div className="score-board-container">
+              <b className="score-board-title">Score Points</b>
+              {renderScorePoints()}
+            </div>
           </div>
         </div>
       </div>

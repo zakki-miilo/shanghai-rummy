@@ -84,9 +84,15 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         isWinner
           ? {
               overflow: "visible",
-              border: "3px solid #ffc107",
-              boxShadow: "0 0 15px rgba(255, 193, 7, 0.7)",
+              border: "3px solid #ffc107 !important",
+              boxShadow: "0 0 15px rgba(255, 193, 7, 0.7) !important",
               animation: "pulse-gold 2s infinite",
+            }
+          : isLoser && currentRound > 0
+          ? {
+              border: "none !important",
+              boxShadow: "0 0 0 5px #dc3545, 0 0 15px rgba(220, 53, 69, 0.4)",
+              animation: "pulse-red 2s infinite",
             }
           : {}
       }
