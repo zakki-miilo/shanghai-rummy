@@ -34,7 +34,9 @@ interface PlayerCardProps {
   currentRound: number;
   isWinner: boolean;
   onUndoBuy: () => void;
+  isLoser?: boolean; // New prop
 }
+
 const PlayerCard: React.FC<PlayerCardProps> = ({
   name,
   buys,
@@ -48,6 +50,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   currentRound,
   isWinner,
   onUndoBuy,
+  isLoser = false, // Default to false
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [inputPoints, setInputPoints] = useState(0);
@@ -71,8 +74,22 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   return (
     <div
       className={`card h-100 position-relative ${
-        isWinner ? "border border-4 border-warning" : ""
+        isWinner
+          ? "winner-card"
+          : isLoser && currentRound > 0
+          ? "loser-card"
+          : ""
       }`}
+      style={
+        isWinner
+          ? {
+              overflow: "visible",
+              border: "3px solid #ffc107",
+              boxShadow: "0 0 15px rgba(255, 193, 7, 0.7)",
+              animation: "pulse-gold 2s infinite",
+            }
+          : {}
+      }
     >
       {isWinner && (
         <img

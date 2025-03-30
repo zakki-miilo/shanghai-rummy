@@ -137,6 +137,10 @@ const AppContent: React.FC = () => {
     ...players.map((_, index) => calculateTotalPoints(index))
   );
 
+  const highestPoints = Math.max(
+    ...players.map((_, idx) => calculateTotalPoints(idx))
+  );
+
   return (
     <div className="container">
       <SideNavbar />
@@ -225,6 +229,11 @@ const AppContent: React.FC = () => {
                           isTie={isTie}
                           currentRound={currentRound}
                           isWinner={isWinner}
+                          isLoser={
+                            calculateTotalPoints(index) === highestPoints &&
+                            players.length > 1 &&
+                            highestPoints > 0
+                          }
                         />
                       </div>
                     );
