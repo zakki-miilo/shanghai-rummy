@@ -324,3 +324,16 @@ body {
 .score-history li {
   margin-bottom: 10px;
 }
+
+/* Custom 5-column layout */
+.col-md-custom-5 {
+  width: 20%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+@media (max-width: 767.98px) {
+  .col-md-custom-5 {
+    width: 100%;
+  }
+}

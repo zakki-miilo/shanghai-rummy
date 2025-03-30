@@ -195,7 +195,22 @@ const AppContent: React.FC = () => {
                       winnerIndex === index && currentRound === 11;
 
                     return (
-                      <div key={index} className="col-md-3 mb-4">
+                      <div
+                        key={index}
+                        className={`${
+                          players.length <= 5
+                            ? players.length === 5
+                              ? "col-md-custom-5"
+                              : players.length === 4
+                              ? "col-md-3"
+                              : players.length === 3
+                              ? "col-md-4"
+                              : players.length === 2
+                              ? "col-md-6"
+                              : "col-md-8 mx-auto"
+                            : "col-md-custom-5 col-lg-custom-5" // For 6+ players, maintain 5 per row
+                        } mb-4`}
+                      >
                         <PlayerCard
                           name={player.name}
                           points={rounds[currentRound].points[index] || 0}

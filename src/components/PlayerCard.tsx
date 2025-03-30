@@ -118,7 +118,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
           {currentRoundBuys === 0 ? (
             <p className="text-center text-muted mb-0">No buys this round.</p>
           ) : (
-            <div className="d-flex align-items-center border border-2 border-warning w-100 p-2 rounded-3">
+            <div className="d-flex align-items-center border border-2 border-warning w-100 p-2 rounded-3 position-relative">
               {Array.from({ length: currentRoundBuys }, (_, index) => {
                 let colorClass = "";
                 if (index < buys) {
@@ -147,7 +147,16 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
                 );
               })}
               {buys === currentRoundBuys && currentRoundBuys !== 0 && (
-                <Badge className="ml-2">Max</Badge>
+                <Badge
+                  className="position-absolute"
+                  style={{
+                    right: "8px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                  }}
+                >
+                  Max
+                </Badge>
               )}
             </div>
           )}
